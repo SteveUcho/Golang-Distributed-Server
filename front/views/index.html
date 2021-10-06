@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Todo list</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <style>
+            .form-inline{
+                display: inline-flex;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="display-1">Todo List</h1>
+            <form class="form-inline" action="/create-or-update-task" method="POST">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="task-name" class="sr-only">Task Name</label>
+                    <input type="text" name="taskname" class="form-control" id="task-name" placeholder="Task Name Here">
+                </div>
+                <button type="submit" class="btn btn-success mb-2">Create Task</button>
+            </form>
+            <br>
+            <br>
+            <h1>Current Tasks</h1>
+            <div>
+                {{range .Todos}}
+                    <form class="form-inline" action="/create-or-update-task" method="POST">
+                        <div class="form-group mx-sm-3 mb-2">
+                            <label for="t-{{.ID}}" class="sr-only">Task Name</label>
+                            <input type="text" name="taskname" class="form-control" id="t-{{.ID}}" value="{{.TaskName}}">
+                            <input type="text" name="id" value="{{.ID}}" hidden>
+                        </div>
+                        <button type="submit" class="btn btn-info mb-2">Update Task</button>
+                    </form>
+                    <form class="form-inline mx-sm-2" action="/delete-task" method="POST">
+                        <input type="text" name="id" value="{{.ID}}" hidden>
+                        <button type="submit" class="btn btn-danger mb-2">Delete Task</button>
+                    </form>
+                    <hr>
+                {{end}}
+            </div>
+        </div>
+
+    </body>
+</html>
